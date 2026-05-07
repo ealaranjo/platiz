@@ -1,0 +1,154 @@
+/* ============================================
+   V3 Node-Switching Styles
+   ============================================ */
+
+/* ---- App Layout ---- */
+#v3-app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* ---- Map Panel ---- */
+#v3-map-panel {
+  display: none;
+  width: 30%;
+  height: 100%;
+  flex-direction: column;
+  position: relative;
+  border-right: 1px solid var(--glass-border);
+  background: var(--bg-secondary);
+}
+
+@media (min-width: 768px) {
+  #v3-map-panel {
+    display: flex;
+  }
+}
+
+/* ---- Content Area ---- */
+#v3-content {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.v3-section {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.v3-section.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* ---- Mobile Map ---- */
+#v3-mobile-map {
+  background: var(--bg-primary);
+}
+
+/* ---- Node Map Styles ---- */
+.v3-connector {
+  fill: none;
+  stroke: rgba(36, 145, 182, 0.25);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+
+.v3-connector-active {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 6px rgba(36, 145, 182, 0.7));
+}
+
+.v3-node-group {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.v3-node-group.locked {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.v3-node-group.locked .v3-node-rect {
+  stroke-dasharray: 4 4;
+}
+
+.v3-node-rect {
+  fill: rgba(36, 145, 182, 0.08);
+  stroke: rgba(36, 145, 182, 0.35);
+  stroke-width: 1.5;
+  rx: 12;
+  transition: all 0.3s ease;
+}
+
+.v3-node-group:hover .v3-node-rect {
+  fill: rgba(36, 145, 182, 0.18);
+  stroke: rgba(36, 145, 182, 0.6);
+}
+
+.v3-node-group.active .v3-node-rect {
+  fill: rgba(36, 145, 182, 0.85);
+  stroke: var(--accent);
+  filter: drop-shadow(0 0 12px rgba(36, 145, 182, 0.5));
+}
+
+.v3-status {
+  fill: rgba(36, 145, 182, 0.5);
+  transition: all 0.3s ease;
+}
+
+.v3-node-group.active .v3-status {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+}
+
+.v3-label {
+  fill: rgba(255, 255, 255, 0.55);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.v3-node-group:hover .v3-label {
+  fill: rgba(255, 255, 255, 0.9);
+}
+
+.v3-node-group.active .v3-label {
+  fill: #ffffff;
+  font-weight: 600;
+}
+
+.v3-flow-dot {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 8px rgba(36, 145, 182, 1));
+}
+
+/* ---- Form Labels ---- */
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+  top: -1.25rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+/* ---- Content Section Internal Styling ---- */
+.v3-section .timeline-line {
+  transform: scaleY(0);
+}

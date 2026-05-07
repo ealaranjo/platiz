@@ -1,0 +1,454 @@
+/* ============================================
+   V2 Tunnel Vision Styles — Enhanced
+   ============================================ */
+
+/* ---- Preloader (critical fallback) ---- */
+#preloader-bar {
+  height: 100%;
+  background: linear-gradient(to right, #2491b6, #22d3ee);
+  width: 0;
+  transition: width 100ms ease-out;
+  border-radius: 9999px;
+}
+
+#v2-app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+/* ---- Warp Speed Rays ---- */
+#v2-warp-rays {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  perspective: 800px;
+  overflow: hidden;
+}
+
+#v2-warp-rays.active {
+  opacity: 1;
+}
+
+.v2-warp-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 100vh;
+  background: linear-gradient(to bottom, transparent, rgba(36,145,182,0.6), transparent);
+  transform-origin: center center;
+  opacity: 0;
+}
+
+/* ---- Workflow Grid Background ---- */
+#v2-workflow-grid {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ---- Tunnel ---- */
+#v2-tunnel {
+  position: absolute;
+  inset: 0;
+  perspective: 1200px;
+}
+
+#v2-tunnel-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+/* ---- Sections ---- */
+.v2-section {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  opacity: 0;
+  background: var(--bg-primary);
+  z-index: 0;
+}
+
+.v2-section.active {
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* ---- Controls ---- */
+#v2-controls {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.45rem 1rem;
+  border-radius: 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+@media (max-width: 768px) {
+  #v2-controls {
+    left: 0.5rem;
+    right: 0.5rem;
+    transform: none;
+    max-width: none;
+  }
+  #v2-progress {
+    flex: 1;
+    min-width: 0;
+    max-width: calc(100% - 5rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #v2-progress::-webkit-scrollbar { display: none; }
+}
+
+/* ---- Progress Bar with Workflow Nodes ---- */
+#v2-progress {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+#v2-progress::-webkit-scrollbar { display: none; }
+.v2-node-wrapper.active { scroll-snap-align: center; }
+
+/* Node wrapper */
+.v2-node-wrapper {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+/* Node card */
+.v2-node {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--glass-bg);
+  border: 1.5px solid var(--glass-border);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.v2-node-wrapper.active .v2-node {
+  border-color: var(--accent);
+  background: rgba(36,145,182,0.12);
+  box-shadow: 0 0 16px rgba(36,145,182,0.2);
+}
+
+.v2-node-wrapper.visited .v2-node {
+  border-color: rgba(34,197,94,0.3);
+}
+
+.v2-node-wrapper.locked .v2-node {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Pins (input/output circles on node edges) */
+.v2-node-pin {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.v2-node-wrapper.active .v2-node-pin {
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(36,145,182,0.6);
+}
+
+/* Status dot inside node */
+.v2-node-status {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.v2-node-wrapper.active .v2-node-status {
+  background: var(--accent);
+}
+
+.v2-node-wrapper.visited .v2-node-status {
+  background: #22c55e;
+}
+
+.v2-node-wrapper.locked .v2-node-status {
+  background: #ef4444;
+}
+
+/* Label */
+.v2-node-label {
+  font-size: 0.62rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.v2-node-wrapper.active .v2-node-label {
+  color: var(--text-primary);
+}
+
+/* Connector line between nodes (SVG) */
+.v2-node-connector {
+  width: 16px;
+  height: 8px;
+  flex-shrink: 0;
+  z-index: 2;
+  align-self: center;
+  display: block;
+}
+
+/* Data packet (small circle animated along connectors) */
+#v2-data-packet {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(36,145,182,0.9);
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#v2-prev,
+#v2-next {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+#v2-prev:hover:not(:disabled),
+#v2-next:hover:not(:disabled) {
+  background: var(--glass-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+#v2-prev:disabled,
+#v2-next:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ---- Top Controls ---- */
+#v2-top-controls {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ---- Social Links (always visible) ---- */
+
+/* ---- Swipe Hint ---- */
+#v2-swipe-hint {
+  position: fixed;
+  bottom: 5.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+#v2-swipe-hint span {
+  opacity: 0.4;
+}
+#v2-swipe-hint .swipe-arrow {
+  width: 1.2rem;
+  height: 1.2rem;
+  opacity: 1;
+  animation: swipeBounce 2s ease-in-out infinite;
+}
+@keyframes swipeBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(6px); opacity: 0.8; }
+}
+
+@media (min-width: 768px) {
+  #v2-swipe-hint {
+    display: none;
+  }
+}
+
+/* ---- Active Section Scroll Behaviour ---- */
+.v2-section.active {
+  overflow-y: auto;
+  /* Custom scrollbar */
+}
+
+.v2-section.active::-webkit-scrollbar {
+  width: 4px;
+}
+
+.v2-section.active::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.v2-section.active::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+/* Smooth scrolling for sections */
+.v2-section {
+  scroll-behavior: smooth;
+}
+
+/* ---- Content Padding for Fixed Overlays ---- */
+.v2-section > div {
+  padding-right: 24px;
+  padding-bottom: 140px;
+}
+
+/* ---- Skill Cards Alignment Fix ---- */
+.skill-card {
+  transform: translateZ(0);
+}
+
+/* ---- Form Labels ---- */
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+  top: -1.25rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+/* ---- Lock Overlay ---- */
+#contact-lock-overlay svg {
+  animation: lockPulse 2s ease-in-out infinite;
+}
+@keyframes lockPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+/* ---- Trophy Button ---- */
+#trophy-btn.pulse {
+  animation: trophyPulse 0.5s ease-in-out 3;
+}
+#trophy-btn.all-unlocked {
+  color: #fbbf24 !important;
+  filter: drop-shadow(0 0 6px rgba(251,191,36,0.5));
+}
+@keyframes trophyPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+/* ---- Achievement Modal ---- */
+#achievement-modal {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+#achievement-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---- First Visit Toast ---- */
+#first-visit-toast {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 1rem);
+  display: flex;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  backdrop-filter: blur(16px);
+}
+
+[data-theme="light"] #first-visit-toast {
+  background: rgba(255,255,255,0.92);
+}
+
+#first-visit-toast.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+/* ---- Version Switcher ---- */
+.version-switcher { position: relative; z-index: 101; }
+.version-menu {
+  position: absolute; top: calc(100% + 0.5rem); right: 0; min-width: 10rem;
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: all 0.2s ease; z-index: 102;
+}
+.version-switcher:hover .version-menu,
+.version-switcher:focus-within .version-menu {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.version-menu a {
+  display: block; padding: 0.55rem 1rem; font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace; transition: background 0.15s ease;
+}
+.version-menu a:hover { background: rgba(255,255,255,0.05); }
+.version-menu-header {
+  font-family: 'JetBrains Mono', monospace; pointer-events: none; user-select: none;
+}
+
+/* ---- Mobile Achievements Toggle (above controls bar) ---- */
+#mobile-achievements-toggle {
+  bottom: 6.5rem !important;
+}

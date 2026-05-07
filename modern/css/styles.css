@@ -1,0 +1,508 @@
+/* ============================================
+   Emanuel Laranjo — Modern CV Styles
+   ============================================ */
+
+/* ---- CSS Variables ---- */
+:root {
+  --bg-primary:   #f4f5f7;
+  --bg-secondary: #ffffff;
+  --bg-tertiary:  #e2e8f0;
+  --text-primary:   #0f172a;
+  --text-secondary: #475569;
+  --text-muted:     #94a3b8;
+  --accent:         #2491b6;
+  --glass-bg:       rgba(255,255,255,0.6);
+  --glass-border:   rgba(255,255,255,0.4);
+  --glass-shadow:   0 8px 32px rgba(0,0,0,0.08);
+}
+
+[data-theme="dark"] {
+  --bg-primary:   #0a0a0a;
+  --bg-secondary: #0f172a;
+  --bg-tertiary:  #1e293b;
+  --text-primary:   #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted:     #64748b;
+  --accent:         #2bb3e0;
+  --glass-bg:       rgba(15,23,42,0.55);
+  --glass-border:   rgba(255,255,255,0.08);
+  --glass-shadow:   0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* ---- Base ---- */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: hidden; /* Locked until hero scroll clicked */
+}
+
+::selection {
+  background: rgba(36,145,182,0.3);
+  color: inherit;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ---- Glassmorphism Utilities ---- */
+.glass-nav {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(36,145,182,0.3);
+  box-shadow: 0 12px 40px rgba(36,145,182,0.12);
+}
+
+.glass-icon {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  transition: all .2s ease;
+}
+
+.glass-btn {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-badge {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  transition: all .25s ease;
+  cursor: pointer;
+}
+
+.glass-badge:hover,
+.glass-badge.unlocked {
+  background: rgba(36,145,182,0.15);
+  border-color: rgba(36,145,182,0.4);
+  color: var(--accent);
+  box-shadow: 0 0 20px rgba(36,145,182,0.15);
+}
+
+.glass-sidebar {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ---- Hero Spotlight ---- */
+#hero {
+  position: relative;
+  background: var(--bg-primary);
+  height: 100vh;
+}
+
+#hero-spotlight {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(at 40% 20%, rgba(36,145,182,0.25) 0px, transparent 50%),
+    radial-gradient(at 80% 0%,   rgba(6,182,212,0.18)  0px, transparent 50%),
+    radial-gradient(at 0%   50%, rgba(36,145,182,0.18)  0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(6,182,212,0.12)  0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(36,145,182,0.20) 0px, transparent 50%);
+  animation: meshMove 20s ease-in-out infinite alternate;
+  mask-image: radial-gradient(
+    circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    black 0%,
+    transparent 70%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    black 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---- Mesh Gradient Background ---- */
+.mesh-gradient {
+  background:
+    radial-gradient(at 40% 20%, rgba(36,145,182,0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%,   rgba(6,182,212,0.1)  0px, transparent 50%),
+    radial-gradient(at 0%   50%, rgba(36,145,182,0.1)  0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(6,182,212,0.08)  0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(36,145,182,0.12) 0px, transparent 50%);
+  animation: meshMove 20s ease-in-out infinite alternate;
+}
+
+@keyframes meshMove {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* ---- Animations ---- */
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-20px) scale(1.02); }
+}
+
+@keyframes floatDelayed {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-30px) scale(1.03); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes bounceSlow {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(8px); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatDelayed 10s ease-in-out infinite 2s;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounceSlow 2.5s ease-in-out infinite;
+}
+
+/* ---- Sidebar Layout Offset (desktop) ---- */
+@media (min-width: 1024px) {
+  #about,
+  #timeline,
+  #skills,
+  #projects,
+  #contact {
+    padding-left: 200px;
+    padding-right: 310px;
+  }
+}
+
+#achievements-sidebar {
+  scroll-behavior: auto;
+}
+
+/* ---- Preloader (critical fallback) ---- */
+#preloader-bar {
+  height: 100%;
+  background: linear-gradient(to right, #2491b6, #22d3ee);
+  width: 0;
+  transition: width 100ms ease-out;
+  border-radius: 9999px;
+}
+
+/* ---- Preloader ---- */
+#preloader {
+  pointer-events: all;
+}
+#preloader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* ---- Timeline Line ---- */
+.timeline-line {
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+/* ---- Achievement List Items ---- */
+#achievement-list li,
+#achievement-list-mobile li {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  transition: all .25s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  background: transparent;
+}
+
+#achievement-list li.unlocked,
+#achievement-list-mobile li.unlocked {
+  background: rgba(36,145,182,0.12);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+#achievement-list li .trophy,
+#achievement-list-mobile li .trophy {
+  opacity: 0.3;
+  transition: opacity .25s ease;
+}
+
+#achievement-list li.unlocked .trophy,
+#achievement-list-mobile li.unlocked .trophy {
+  opacity: 1;
+}
+
+/* ---- Mobile Drawer ---- */
+#mobile-achievements-drawer.open {
+  transform: translateY(0);
+}
+
+/* ---- Nav Contact Highlight ---- */
+.nav-link.nav-highlight {
+  color: var(--accent) !important;
+  position: relative;
+  font-weight: 600;
+}
+.nav-link.nav-highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: navPulse 2s ease-in-out infinite;
+}
+@keyframes navPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ---- Sidebar Visibility ---- */
+.sidebar-hidden {
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.sidebar-visible {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* ---- Mobile Achievement Button Visibility ---- */
+.mobile-btn-hidden {
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.mobile-btn-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* ---- Reduced Motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---- Workflow Node Graph (n8n-style) ---- */
+#workflow-graph-container {
+  background: rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-right: 1px solid rgba(36, 145, 182, 0.1);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.4s, opacity 0.4s ease;
+}
+
+#workflow-graph-container.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s, opacity 0.4s ease;
+}
+
+#workflow-graph-container:hover {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+/* Connector paths between nodes */
+.wg-connector {
+  fill: none;
+  stroke: rgba(36, 145, 182, 0.35);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+
+.wg-connector-active {
+  fill: none;
+  stroke: #2491b6;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 6px rgba(36, 145, 182, 0.7));
+}
+
+/* Node pills */
+.wg-node-group {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wg-node-rect {
+  fill: rgba(36, 145, 182, 0.12);
+  stroke: rgba(36, 145, 182, 0.4);
+  stroke-width: 1.5;
+  rx: 12;
+  transition: all 0.3s ease;
+}
+
+.wg-node-group:hover .wg-node-rect {
+  fill: rgba(36, 145, 182, 0.25);
+  stroke: rgba(36, 145, 182, 0.7);
+}
+
+.wg-node-group.active .wg-node-rect {
+  fill: rgba(36, 145, 182, 0.85);
+  stroke: #2491b6;
+  filter: drop-shadow(0 0 12px rgba(36, 145, 182, 0.5));
+}
+
+/* Status indicator dot */
+.wg-status {
+  fill: rgba(36, 145, 182, 0.5);
+  transition: all 0.3s ease;
+}
+
+.wg-node-group.active .wg-status {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+}
+
+/* Node label */
+.wg-label {
+  fill: rgba(255, 255, 255, 0.5);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.wg-node-group:hover .wg-label {
+  fill: rgba(255, 255, 255, 0.85);
+}
+
+.wg-node-group.active .wg-label {
+  fill: #ffffff;
+  font-weight: 600;
+}
+
+/* Flow animation dot */
+.wg-flow-dot {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 8px rgba(36, 145, 182, 1));
+  opacity: 0;
+}
+
+.wg-flow-dot.animating {
+  opacity: 1;
+}
+
+/* ---- Section Glow on Workflow Complete ---- */
+.section-glow {
+  animation: sectionGlow 1.2s ease-out forwards;
+}
+
+@keyframes sectionGlow {
+  0% {
+    box-shadow: inset 0 0 0 0 rgba(36, 145, 182, 0);
+  }
+  40% {
+    box-shadow: inset 0 0 60px 20px rgba(36, 145, 182, 0.12), 0 0 40px rgba(36, 145, 182, 0.15);
+  }
+  100% {
+    box-shadow: inset 0 0 0 0 rgba(36, 145, 182, 0);
+  }
+}
+
+/* ---- Touch Device Tweaks ---- */
+@media (pointer: coarse) {
+  .glass-card:hover {
+    transform: none !important;
+  }
+}
+
+/* ---- Mobile: hide desktop sidebar ---- */
+@media (max-width: 1023px) {
+  #achievements-sidebar { display: none !important; }
+}
+
+/* ---- Version Switcher ---- */
+.version-switcher { position: relative; z-index: 1001; }
+.version-menu {
+  position: absolute; top: calc(100% + 0.5rem); right: 0; min-width: 10rem;
+  background: var(--glass-bg); backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--glass-border); border-radius: 12px;
+  box-shadow: var(--glass-shadow);
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: all 0.2s ease;
+}
+.version-switcher:hover .version-menu,
+.version-switcher:focus-within .version-menu {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.version-menu a {
+  display: block; padding: 0.55rem 1rem; font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace; transition: background 0.15s ease;
+}
+.version-menu a:hover { background: rgba(255,255,255,0.05); }
+.version-menu-header {
+  font-family: 'JetBrains Mono', monospace; pointer-events: none; user-select: none;
+}
+.version-menu a:hover { background: rgba(255,255,255,0.05); }

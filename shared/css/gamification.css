@@ -1,0 +1,99 @@
+/* ============================================
+   Shared Gamification Styles
+   ============================================ */
+
+/* ---- Achievement List Items ---- */
+#achievement-list li,
+#achievement-list-mobile li {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  transition: all .25s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  background: transparent;
+}
+
+#achievement-list li.unlocked,
+#achievement-list-mobile li.unlocked {
+  background: rgba(36,145,182,0.12);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+#achievement-list li .trophy,
+#achievement-list-mobile li .trophy {
+  opacity: 0.3;
+  transition: opacity .25s ease;
+}
+
+#achievement-list li.unlocked .trophy,
+#achievement-list-mobile li.unlocked .trophy {
+  opacity: 1;
+}
+
+/* ---- Sidebar Visibility ---- */
+.sidebar-hidden {
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.sidebar-visible {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* ---- Mobile Achievement Button Visibility ---- */
+.mobile-btn-hidden {
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.mobile-btn-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* ---- Mobile Drawer ---- */
+#mobile-achievements-drawer.open {
+  transform: translateY(0);
+}
+
+/* ---- Nav Contact Highlight ---- */
+.nav-link.nav-highlight {
+  color: var(--accent) !important;
+  position: relative;
+  font-weight: 600;
+}
+.nav-link.nav-highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: navPulse 2s ease-in-out infinite;
+}
+
+/* ---- Preloader ---- */
+#preloader {
+  pointer-events: all;
+}
+#preloader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---- Timeline Line ---- */
+.timeline-line {
+  transform-origin: top;
+  transform: scaleY(0);
+}

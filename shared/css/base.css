@@ -1,0 +1,132 @@
+/* ============================================
+   Shared Base Styles
+   ============================================ */
+
+/* ---- CSS Variables ---- */
+:root {
+  --bg-primary:   #f4f5f7;
+  --bg-secondary: #ffffff;
+  --bg-tertiary:  #e2e8f0;
+  --text-primary:   #0f172a;
+  --text-secondary: #475569;
+  --text-muted:     #64748b;
+  --accent:         #2491b6;
+  --glass-bg:       rgba(255,255,255,0.6);
+  --glass-border:   rgba(255,255,255,0.4);
+  --glass-shadow:   0 8px 32px rgba(0,0,0,0.08);
+}
+
+[data-theme="dark"] {
+  --bg-primary:   #0a0a0a;
+  --bg-secondary: #0f172a;
+  --bg-tertiary:  #1e293b;
+  --text-primary:   #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted:     #64748b;
+  --accent:         #2bb3e0;
+  --glass-bg:       rgba(15,23,42,0.55);
+  --glass-border:   rgba(255,255,255,0.08);
+  --glass-shadow:   0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* ---- Base ---- */
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  overflow-x: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+::selection {
+  background: rgba(36,145,182,0.3);
+  color: inherit;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ---- Glassmorphism Utilities ---- */
+.glass-nav {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(36,145,182,0.3);
+  box-shadow: 0 12px 40px rgba(36,145,182,0.12);
+}
+
+.glass-icon {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  transition: all .2s ease;
+}
+
+.glass-btn {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-badge {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  transition: all .25s ease;
+  cursor: pointer;
+}
+
+.glass-badge:hover,
+.glass-badge.unlocked {
+  background: rgba(36,145,182,0.15);
+  border-color: rgba(36,145,182,0.4);
+  color: var(--accent);
+  box-shadow: 0 0 20px rgba(36,145,182,0.15);
+}
+
+.glass-sidebar {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ---- Form Floating Labels ---- */
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+  top: -1.25rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
