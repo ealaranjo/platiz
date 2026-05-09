@@ -334,22 +334,15 @@
 /* ---- Active Section Scroll Behaviour ---- */
 .v2-section.active {
   overflow-y: auto;
-  /* Custom scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .v2-section.active::-webkit-scrollbar {
-  width: 4px;
+  display: none;
 }
 
-.v2-section.active::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.v2-section.active::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 2px;
-  opacity: 0.6;
-}
+/* Smooth scrolling for sections */
 
 /* Smooth scrolling for sections */
 .v2-section {

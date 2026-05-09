@@ -473,12 +473,26 @@
     });
 
     let touchStartX = 0;
-    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    let touchStartY = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
     document.addEventListener('touchend', (e) => {
-      const diff = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(diff) > 50) {
-        if (diff < 0) v2SwitchSection(v2Current + 1);
+      const diffX = e.changedTouches[0].clientX - touchStartX;
+      const diffY = e.changedTouches[0].clientY - touchStartY;
+
+      // Swipe horizontal (mantém)
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX < 0) v2SwitchSection(v2Current + 1);
         else v2SwitchSection(v2Current - 1);
+        return;
+      }
+
+      // Swipe vertical (novo) — scroll com dedo
+      if (Math.abs(diffY) > 50) {
+        if (diffY < 0) v2SwitchSection(v2Current + 1); // para baixo → próxima
+        else v2SwitchSection(v2Current - 1);           // para cima → anterior
       }
     }, { passive: true });
 
